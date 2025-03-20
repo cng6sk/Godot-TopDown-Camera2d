@@ -15,34 +15,33 @@ extends Camera2D
 @export var zoom_follow_cursor : bool = true
 @export_range(1, 10, 0.01) var max_zoom_level : float = 5.0
 @export_range(0.01, 1, 0.01) var min_zoom_level : float = 0.1
-@export_range(0.01, 0.2, 0.01) var zoom_factor : float = 0.1
+@export_range(0.01, 0.2, 0.01) var zoom_factor : float = 0.08
 
 @export_group("Boundary")
 
 @export var use_boundaries: bool = false
 @export var boundary_X: float = 3000.0
 @export var boundary_Y: float = 2000.0
-@export var boundary_color: Color = Color(0.2, 0.4, 0.8, 0.1):
-	set(new_val):
-		boundary_color = new_val
-		queue_redraw()
+@export var boundary_color: Color = Color(0.2, 0.4, 0.8, 0.1)
 @export var boundary_border_color: Color = Color(0.2, 0.4, 0.8, 0.6)
 @export var boundary_text_color: Color = Color(1, 1, 1, 0.8)
 @export var boundary_text_size: int = 24
 
 @export_group("Smoothness")
 
-@export_range(0, 0.99, 0.01) var pan_smoothness : float = 0.5:
+@export_range(0, 0.99, 0.01) var pan_smoothness : float = 0.6:
 	set(new_val):
+		pan_smoothness = new_val
 		if not Engine.is_editor_hint():
 			pan_smoothness = pow(new_val, smooth_factor)
 	get:
 		return pan_smoothness
 
-@export_range(0, 0.99, 0.01) var zoom_smoothness : float = 0.5:
+@export_range(0, 0.99, 0.01) var zoom_smoothness : float = 0.6:
 	set(new_val):
+		zoom_smoothness = new_val
 		if not Engine.is_editor_hint():
-			zoom_smoothness  = pow(new_val, smooth_factor)
+			zoom_smoothness = pow(new_val, smooth_factor)
 	get:
 		return zoom_smoothness 
 
@@ -65,6 +64,7 @@ var _editor_draw: bool = Engine.is_editor_hint()
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
+		return
 	if not Engine.is_editor_hint():
 		pan_smoothness = pan_smoothness
 		zoom_smoothness = zoom_smoothness
