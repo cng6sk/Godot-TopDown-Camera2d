@@ -16,3 +16,23 @@ Activate plugin in `Project` → `Project Settings` → `Plugins`
 3. Configure the camera properties in the Inspector panel.
 
 4. Make the TopDownCamera2D node current to use it as the active camera in your scene.
+
+<br>
+
+---
+
+<br>
+
+# Features
+## Cursor-Centric Zoom and Pan
+<table>
+    <tr>
+        <td align="center">      
+            <video src="https://github.com/user-attachments/assets/495a9226-a0f9-46aa-a5ec-dd2dd4e7c8dd"/> 
+        </td>
+    </tr>
+</table>
+
+## Visual Boundary Configuration
+
+![Image](https://github.com/user-attachments/assets/f9b6d64c-194b-4fb5-ae49-af63dcb224e9)
