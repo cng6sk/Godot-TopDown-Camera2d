@@ -5,3 +5,4 @@
 /**        export-ignore
 /addons    !export-ignore
 /addons/** !export-ignore
+/addons/TopDownCamera2D/plugin.cfg export-subst
