@@ -36,8 +36,11 @@ Activate plugin in `Project` → `Project Settings` → `Plugins`
 
 ![Image](https://github.com/user-attachments/assets/f9b6d64c-194b-4fb5-ae49-af63dcb224e9)
 
-# Planned Features
+# Other Feature
 
 - Edge Scrolling: Automatically pan the camera when the mouse cursor approaches the screen edges.
-- Keyboard Control: Support for keyboard inputs to pan and zoom.
+- Keyboard Control: Support for keyboard inputs to pan.
+
+# Planned Features
+
 - Touch Controls: Add pinch-to-zoom and drag-to-pan functionality for mobile devices.
