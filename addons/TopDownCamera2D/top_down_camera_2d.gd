@@ -13,6 +13,12 @@ extends Camera2D
 @export var zoom_in_input : String = "zoomIn"
 @export var zoom_out_input : String = "zoomOut"
 @export var zoom_follow_cursor : bool = true
+@export var keyboard_zoom_enabled: bool = true
+@export var pan_up_input: String = "pan_up"
+@export var pan_down_input: String = "pan_down"
+@export var pan_left_input: String = "pan_left"
+@export var pan_right_input: String = "pan_right"
+@export_range(100, 2000, 10) var pan_speed: float = 1000.0
 @export_range(1, 20, 0.01) var max_zoom_level : float = 5.0
 @export_range(0.01, 1, 0.01) var min_zoom_level : float = 0.1
 @export_range(0.01, 0.2, 0.01) var zoom_factor : float = 0.08
@@ -104,6 +110,20 @@ func _process(delta: float) -> void:
 			scroll_direction = (mouse_pos - screen_center).normalized()
 			target_position += scroll_direction * edge_scroll_speed * delta
 
+	# Keyboard Movement
+	var keyboard_pan_direction := Vector2.ZERO
+	if Input.is_action_pressed(pan_left_input):
+		keyboard_pan_direction.x -= 1.0
+	if Input.is_action_pressed(pan_right_input):
+		keyboard_pan_direction.x += 1.0
+	if Input.is_action_pressed(pan_up_input):
+		keyboard_pan_direction.y -= 1.0
+	if Input.is_action_pressed(pan_down_input):
+		keyboard_pan_direction.y += 1.0
+	
+	if keyboard_pan_direction != Vector2.ZERO:
+		keyboard_pan_direction = keyboard_pan_direction.normalized()
+		target_position += keyboard_pan_direction * pan_speed * delta
 	#var pre_mouseZoom_posLocal := to_local(get_canvas_transform().affine_inverse().basis_xform(zoom_mouse_pos))
 	#var post_mouseZoom_posLocal := to_local(get_canvas_transform().affine_inverse().basis_xform(zoom_mouse_pos))
 	
