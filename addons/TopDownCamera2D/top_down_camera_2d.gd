@@ -13,9 +13,15 @@ extends Camera2D
 @export var zoom_in_input : String = "zoomIn"
 @export var zoom_out_input : String = "zoomOut"
 @export var zoom_follow_cursor : bool = true
-@export_range(1, 10, 0.01) var max_zoom_level : float = 5.0
+@export_range(1, 20, 0.01) var max_zoom_level : float = 5.0
 @export_range(0.01, 1, 0.01) var min_zoom_level : float = 0.1
 @export_range(0.01, 0.2, 0.01) var zoom_factor : float = 0.08
+
+@export_group("Edge Scrolling")
+
+@export var edge_scroll_enabled: bool = true
+@export_range(1, 200, 1) var edge_scroll_margin: float = 10.0
+@export_range(0, 1000, 10) var edge_scroll_speed: float = 300.0
 
 @export_group("Boundary")
 
@@ -78,6 +84,25 @@ func _process(delta: float) -> void:
 	#print("_process")
 	var pan_interpolation := pow(pan_smoothness, base_fps * delta)
 	var zoom_interpolation := pow(zoom_smoothness, base_fps * delta)
+	
+	# edge scrolling function
+	if edge_scroll_enabled:
+		var mouse_pos := get_viewport().get_mouse_position()
+		var viewport_size := get_viewport_rect().size
+		var screen_center := viewport_size * 0.5
+		var scroll_direction := Vector2.ZERO
+		
+		# is_in_edge
+		var is_in_edge_area := (
+			mouse_pos.x < edge_scroll_margin or
+			mouse_pos.x > viewport_size.x - edge_scroll_margin or
+			mouse_pos.y < edge_scroll_margin or
+			mouse_pos.y > viewport_size.y - edge_scroll_margin
+		)
+		# Update
+		if is_in_edge_area:
+			scroll_direction = (mouse_pos - screen_center).normalized()
+			target_position += scroll_direction * edge_scroll_speed * delta
 
 	#var pre_mouseZoom_posLocal := to_local(get_canvas_transform().affine_inverse().basis_xform(zoom_mouse_pos))
 	#var post_mouseZoom_posLocal := to_local(get_canvas_transform().affine_inverse().basis_xform(zoom_mouse_pos))
